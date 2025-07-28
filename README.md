@@ -21,3 +21,5 @@ VS Code Extensions
 - Prettier - code Formatter
 - Pretty TypeScript Errors
 - Tailwind CSS IntelliSence
+- import cost
+- readme reader
