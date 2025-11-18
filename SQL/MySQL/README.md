@@ -1,39 +1,66 @@
-Complete MySQL & SQL Guide - From Scratch to Advanced
-A comprehensive guide covering all MySQL and SQL commands from beginner to advanced level with practical examples.
+# 🗄️ Complete MySQL & SQL Guide
+### From Scratch to Advanced - A Beginner-Friendly Reference
 
-- Table of Contents
-Getting Started
-Database Operations
-Table Operations
-Data Types
-CRUD Operations
-Querying Data
-Filtering and Sorting
-Joins
-Aggregate Functions
-Grouping and Having
-Subqueries
-Constraints
-Indexes
-Views
-Stored Procedures
-Triggers
-Transactions
-User Management
-Advanced Concepts
-Getting Started
-Installing MySQL
-bash
-# Ubuntu/Debian
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
+[![SQL](https://img.shields.io/badge/SQL-Learning-green.svg)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/License-Educational-yellow.svg)](https://opensource.org/licenses/MIT)
+
+> 📚 A comprehensive guide covering all MySQL and SQL commands with practical examples, perfect for beginners and professionals alike.
+
+---
+
+## 📋 Table of Contents
+
+- [🚀 Getting Started](#-getting-started)
+- [💾 Database Operations](#-database-operations)
+- [📊 Table Operations](#-table-operations)
+- [🔤 Data Types](#-data-types)
+- [✏️ CRUD Operations](#️-crud-operations)
+- [🔍 Querying Data](#-querying-data)
+- [🎯 Filtering and Sorting](#-filtering-and-sorting)
+- [🔗 Joins](#-joins)
+- [📈 Aggregate Functions](#-aggregate-functions)
+- [📦 Grouping and Having](#-grouping-and-having)
+- [🎭 Subqueries](#-subqueries)
+- [🔒 Constraints](#-constraints)
+- [⚡ Indexes](#-indexes)
+- [👁️ Views](#️-views)
+- [⚙️ Stored Procedures](#️-stored-procedures)
+- [🎬 Triggers](#-triggers)
+- [💰 Transactions](#-transactions)
+- [👥 User Management](#-user-management)
+- [🚀 Advanced Concepts](#-advanced-concepts)
+- [📌 Quick Reference](#-quick-reference)
+- [🎓 Learning Resources](#-learning-resources)
+
+---
+
+## 🚀 Getting Started
+
+### 📥 Installing MySQL
+
+Choose your operating system:
+
+**Ubuntu/Debian** 🐧
+```bash
 sudo apt-get update
 sudo apt-get install mysql-server
+```
 
-# MacOS
+**MacOS** 🍎
+```bash
 brew install mysql
+```
 
-# Windows - Download from mysql.com
-Connecting to MySQL
-bash
+**Windows** 🪟
+- Download from [mysql.com](https://www.mysql.com/)
+
+---
+
+### 🔌 Connecting to MySQL
+
+**Basic Connection**
+```bash
 # Connect to MySQL
 mysql -u root -p
 
@@ -42,65 +69,123 @@ mysql -u username -p database_name
 
 # Connect to remote server
 mysql -h hostname -u username -p
-Basic MySQL Commands
-sql
--- Show MySQL version
+```
+
+---
+
+### 🛠️ Basic MySQL Commands
+
+```sql
+-- 🔍 Show MySQL version
 SELECT VERSION();
 
--- Show current user
+-- 👤 Show current user
 SELECT USER();
 
--- Show current database
+-- 📂 Show current database
 SELECT DATABASE();
 
--- Get help
+-- ❓ Get help
 HELP;
 
--- Exit MySQL
+-- 🚪 Exit MySQL
 EXIT;
 -- or
 QUIT;
-Database Operations
-Create Database
-sql
+```
+
+---
+
+## 💾 Database Operations
+
+### ➕ Create Database
+
+```sql
 -- Create new database
 CREATE DATABASE company;
 
--- Create database if not exists
+-- Create database if not exists (prevents errors)
 CREATE DATABASE IF NOT EXISTS company;
 
--- Create database with character set
+-- Create database with specific character set
 CREATE DATABASE company 
 CHARACTER SET utf8mb4 
 COLLATE utf8mb4_unicode_ci;
-Show Databases
-sql
+```
+
+**💡 Example Output:**
+```
+Query OK, 1 row affected (0.01 sec)
+```
+
+---
+
+### 👀 Show Databases
+
+```sql
 -- List all databases
 SHOW DATABASES;
 
 -- Show databases matching pattern
 SHOW DATABASES LIKE 'comp%';
-Use Database
-sql
+```
+
+**📝 Example Output:**
+```
++--------------------+
+| Database           |
++--------------------+
+| company            |
+| information_schema |
+| mysql              |
++--------------------+
+```
+
+---
+
+### 🎯 Use Database
+
+```sql
 -- Switch to database
 USE company;
-Drop Database
-sql
--- Delete database
+```
+
+**✅ Success Message:**
+```
+Database changed
+```
+
+---
+
+### ❌ Drop Database
+
+```sql
+-- Delete database (⚠️ Use with caution!)
 DROP DATABASE company;
 
--- Delete if exists
+-- Delete if exists (safer option)
 DROP DATABASE IF EXISTS company;
-Alter Database
-sql
+```
+
+---
+
+### 🔧 Alter Database
+
+```sql
 -- Change character set
 ALTER DATABASE company 
 CHARACTER SET utf8mb4 
 COLLATE utf8mb4_unicode_ci;
-Table Operations
-Create Table
-sql
--- Basic table creation
+```
+
+---
+
+## 📊 Table Operations
+
+### ➕ Create Table
+
+**Basic Table Creation**
+```sql
 CREATE TABLE employees (
     id INT,
     name VARCHAR(100),
@@ -108,8 +193,10 @@ CREATE TABLE employees (
     salary DECIMAL(10, 2),
     hire_date DATE
 );
+```
 
--- Table with constraints
+**Table with Constraints** ⭐ (Recommended)
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -119,15 +206,23 @@ CREATE TABLE employees (
     department_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
--- Create table from another table
+**Create from Another Table**
+```sql
+-- Copy structure and data
 CREATE TABLE employees_backup AS 
 SELECT * FROM employees;
 
--- Create table like another table
+-- Copy structure only
 CREATE TABLE employees_copy LIKE employees;
-Show Tables
-sql
+```
+
+---
+
+### 👀 Show Tables
+
+```sql
 -- List all tables
 SHOW TABLES;
 
@@ -138,14 +233,23 @@ SHOW TABLES LIKE 'emp%';
 DESCRIBE employees;
 -- or
 DESC employees;
+```
 
--- Show complete table structure
-SHOW CREATE TABLE employees;
+**📝 Example Output:**
+```
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id            | int          | NO   | PRI | NULL    | auto_increment |
+| name          | varchar(100) | NO   |     | NULL    |                |
+| email         | varchar(100) | YES  | UNI | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+```
 
--- Show table columns
-SHOW COLUMNS FROM employees;
-Alter Table
-sql
+---
+
+### 🔧 Alter Table
+```
 -- Add column
 ALTER TABLE employees 
 ADD COLUMN phone VARCHAR(20);
@@ -191,9 +295,14 @@ REFERENCES departments(id);
 -- Drop foreign key
 ALTER TABLE employees 
 DROP FOREIGN KEY fk_department;
-Drop Table
-sql
--- Delete table
+```
+
+---
+
+### ❌ Drop Table
+
+```sql
+-- Delete table (⚠️ Permanent!)
 DROP TABLE employees;
 
 -- Delete if exists
@@ -201,93 +310,120 @@ DROP TABLE IF EXISTS employees;
 
 -- Delete multiple tables
 DROP TABLE employees, departments, projects;
-Truncate Table
-sql
+```
+
+---
+
+### 🧹 Truncate Table
+
+```sql
 -- Remove all data (faster than DELETE)
 TRUNCATE TABLE employees;
-Data Types
-Numeric Types
-sql
--- Integer types
-TINYINT      -- -128 to 127
-SMALLINT     -- -32,768 to 32,767
-MEDIUMINT    -- -8,388,608 to 8,388,607
-INT          -- -2,147,483,648 to 2,147,483,647
-BIGINT       -- Very large integers
+```
 
--- Decimal types
-DECIMAL(10,2)  -- Fixed-point (exact)
-FLOAT          -- Floating-point (approximate)
-DOUBLE         -- Double precision floating-point
+> **💡 Tip:** `TRUNCATE` is faster than `DELETE` as it doesn't log individual row deletions.
 
--- Example
+---
+
+## 🔤 Data Types
+
+### 🔢 Numeric Types
+
+| Type | Range | Use Case |
+|------|-------|----------|
+| `TINYINT` | -128 to 127 | Small numbers (age, status) |
+| `SMALLINT` | -32,768 to 32,767 | Medium numbers |
+| `INT` | -2 billion to 2 billion | Primary keys, quantities |
+| `BIGINT` | Very large numbers | Large IDs, statistics |
+| `DECIMAL(10,2)` | Exact decimal | Money, prices |
+| `FLOAT` | Approximate decimal | Scientific calculations |
+
+**📝 Example:**
+```sql
 CREATE TABLE products (
-    id INT,
-    price DECIMAL(10, 2),
-    weight FLOAT,
-    quantity SMALLINT
+    id INT PRIMARY KEY,
+    price DECIMAL(10, 2),    -- 💰 For money
+    weight FLOAT,             -- ⚖️ For measurements
+    quantity SMALLINT         -- 📦 For counts
 );
-String Types
-sql
--- Character types
-CHAR(50)        -- Fixed length
-VARCHAR(255)    -- Variable length
-TEXT            -- Up to 65,535 characters
-MEDIUMTEXT      -- Up to 16,777,215 characters
-LONGTEXT        -- Up to 4GB
+```
 
--- Binary types
-BINARY(50)
-VARBINARY(255)
-BLOB
-MEDIUMBLOB
-LONGBLOB
+---
 
--- Example
+### 🔤 String Types
+
+| Type | Max Length | Use Case |
+|------|------------|----------|
+| `CHAR(50)` | Fixed 50 | Fixed-length codes |
+| `VARCHAR(255)` | Variable up to 255 | Names, emails |
+| `TEXT` | 65,535 chars | Articles, descriptions |
+| `MEDIUMTEXT` | 16 MB | Long content |
+| `LONGTEXT` | 4 GB | Very long content |
+
+**📝 Example:**
+```sql
 CREATE TABLE articles (
-    title VARCHAR(200),
-    content TEXT,
-    author CHAR(50)
+    title VARCHAR(200),      -- 📰 Short text
+    content TEXT,            -- 📄 Long text
+    author CHAR(50)          -- 👤 Fixed length
 );
-Date and Time Types
-sql
-DATE            -- YYYY-MM-DD
-TIME            -- HH:MM:SS
-DATETIME        -- YYYY-MM-DD HH:MM:SS
-TIMESTAMP       -- Unix timestamp
-YEAR            -- YYYY
+```
 
--- Example
+---
+
+### 📅 Date and Time Types
+
+| Type | Format | Example |
+|------|--------|---------|
+| `DATE` | YYYY-MM-DD | 2024-01-15 |
+| `TIME` | HH:MM:SS | 14:30:00 |
+| `DATETIME` | YYYY-MM-DD HH:MM:SS | 2024-01-15 14:30:00 |
+| `TIMESTAMP` | Auto-updating | Current timestamp |
+| `YEAR` | YYYY | 2024 |
+
+**📝 Example:**
+```sql
 CREATE TABLE events (
     event_date DATE,
     event_time TIME,
     created_at DATETIME,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+               ON UPDATE CURRENT_TIMESTAMP
 );
-Other Types
-sql
--- Enumeration
-ENUM('small', 'medium', 'large')
+```
 
--- Set
-SET('red', 'green', 'blue')
+---
 
--- JSON (MySQL 5.7+)
-JSON
+### 🎨 Other Types
 
--- Boolean (stored as TINYINT)
-BOOLEAN  -- or BOOL
+**Enumeration**
+```sql
+size ENUM('small', 'medium', 'large')
+```
 
--- Example
-CREATE TABLE orders (
-    size ENUM('small', 'medium', 'large'),
-    colors SET('red', 'green', 'blue'),
-    metadata JSON,
-    is_active BOOLEAN
-);
-CRUD Operations
-INSERT - Create Data
-sql
+**Set**
+```sql
+colors SET('red', 'green', 'blue')
+```
+
+**JSON** (MySQL 5.7+)
+```sql
+metadata JSON
+```
+
+**Boolean**
+```sql
+is_active BOOLEAN  -- Stored as TINYINT(1)
+```
+
+---
+
+## ✏️ CRUD Operations
+
+> **CRUD** = **C**reate, **R**ead, **U**pdate, **D**elete
+
+### ➕ INSERT - Create Data
+```
 -- Insert single row
 INSERT INTO employees (name, email, salary, hire_date)
 VALUES ('John Doe', 'john@example.com', 60000, '2024-01-15');
@@ -315,78 +451,117 @@ VALUES ('john@example.com', 'John Duplicate');
 INSERT INTO employees (id, name, salary)
 VALUES (1, 'John Doe', 65000)
 ON DUPLICATE KEY UPDATE salary = 65000;
-SELECT - Read Data
-sql
--- Select all columns
+```
+
+---
+
+### 🔍 SELECT - Read Data
+
+**Select All Columns**
+```sql
 SELECT * FROM employees;
+```
 
--- Select specific columns
+**Select Specific Columns** ⭐ (Best Practice)
+```sql
 SELECT name, email, salary FROM employees;
+```
 
--- Select with alias
-SELECT name AS employee_name, salary AS monthly_salary 
+**With Alias**
+```sql
+SELECT 
+    name AS employee_name, 
+    salary AS monthly_salary 
 FROM employees;
+```
 
--- Select distinct values
+**Distinct Values**
+```sql
 SELECT DISTINCT department_id FROM employees;
+```
 
--- Select with calculated fields
-SELECT name, salary, salary * 12 AS annual_salary 
+**Calculated Fields**
+```sql
+SELECT 
+    name, 
+    salary, 
+    salary * 12 AS annual_salary 
 FROM employees;
-UPDATE - Modify Data
-sql
--- Update single column
+```
+
+**📝 Example Output:**
+```
++------------+--------+---------------+
+| name       | salary | annual_salary |
++------------+--------+---------------+
+| John Doe   | 60000  | 720000        |
+| Jane Smith | 65000  | 780000        |
++------------+--------+---------------+
+```
+
+---
+
+### 🔄 UPDATE - Modify Data
+
+**Single Column**
+```sql
 UPDATE employees 
 SET salary = 70000 
 WHERE id = 1;
+```
 
--- Update multiple columns
+**Multiple Columns**
+```sql
 UPDATE employees 
 SET salary = 75000, department_id = 2 
 WHERE id = 1;
+```
 
--- Update with calculation
+**With Calculation**
+```sql
+-- Give 10% raise to department 1
 UPDATE employees 
 SET salary = salary * 1.10 
 WHERE department_id = 1;
+```
 
--- Update all rows (use with caution)
-UPDATE employees 
-SET updated_at = NOW();
+> **⚠️ Warning:** Always use `WHERE` clause to avoid updating all rows!
 
--- Update with JOIN
-UPDATE employees e
-JOIN departments d ON e.department_id = d.id
-SET e.salary = e.salary * 1.05
-WHERE d.name = 'Sales';
-DELETE - Remove Data
-sql
--- Delete specific rows
+---
+
+### ❌ DELETE - Remove Data
+
+**Delete Specific Rows**
+```sql
 DELETE FROM employees 
 WHERE id = 1;
+```
 
--- Delete with condition
+**Delete with Condition**
+```sql
 DELETE FROM employees 
 WHERE salary < 50000;
+```
 
--- Delete all rows (use with caution)
-DELETE FROM employees;
-
--- Delete with JOIN
-DELETE e FROM employees e
-JOIN departments d ON e.department_id = d.id
-WHERE d.name = 'Closed Department';
-
--- Delete with LIMIT
+**Delete with LIMIT** (Safe Practice)
+```sql
 DELETE FROM employees 
 ORDER BY hire_date 
 LIMIT 5;
-Querying Data
-WHERE Clause
-sql
--- Basic WHERE
-SELECT * FROM employees 
-WHERE salary > 60000;
+```
+
+> **⚠️ Danger:** `DELETE FROM employees;` will delete ALL rows!
+
+---
+
+## 🔍 Querying Data
+
+### 🎯 WHERE Clause
+
+**Basic Conditions**
+```sql
+-- Equal to
+SELECT * FROM employees WHERE salary > 60000;
 
 -- Multiple conditions (AND)
 SELECT * FROM employees 
@@ -395,82 +570,119 @@ WHERE salary > 60000 AND department_id = 1;
 -- Multiple conditions (OR)
 SELECT * FROM employees 
 WHERE department_id = 1 OR department_id = 2;
+```
 
--- NOT condition
-SELECT * FROM employees 
-WHERE NOT department_id = 1;
+---
 
--- IN operator
+**IN Operator**
+```sql
 SELECT * FROM employees 
 WHERE department_id IN (1, 2, 3);
+```
 
--- BETWEEN operator
+---
+
+**BETWEEN Operator**
+```sql
 SELECT * FROM employees 
 WHERE salary BETWEEN 50000 AND 70000;
+```
 
--- LIKE operator (pattern matching)
-SELECT * FROM employees 
-WHERE name LIKE 'John%';  -- Starts with John
+---
 
-SELECT * FROM employees 
-WHERE name LIKE '%son';   -- Ends with son
+**LIKE Operator** (Pattern Matching)
 
-SELECT * FROM employees 
-WHERE name LIKE '%oh%';   -- Contains oh
+| Pattern | Description | Example |
+|---------|-------------|---------|
+| `'John%'` | Starts with John | John Doe, Johnny |
+| `'%son'` | Ends with son | Johnson, Wilson |
+| `'%oh%'` | Contains oh | John, Ohio |
+| `'_o%'` | 2nd char is 'o' | Joe, Bob |
 
-SELECT * FROM employees 
-WHERE email LIKE '_o%';   -- Second character is 'o'
+```sql
+-- Starts with John
+SELECT * FROM employees WHERE name LIKE 'John%';
 
--- IS NULL / IS NOT NULL
-SELECT * FROM employees 
-WHERE department_id IS NULL;
+-- Ends with son
+SELECT * FROM employees WHERE name LIKE '%son';
 
-SELECT * FROM employees 
-WHERE department_id IS NOT NULL;
-ORDER BY
-sql
--- Sort ascending (default)
-SELECT * FROM employees 
-ORDER BY salary;
+-- Contains 'oh'
+SELECT * FROM employees WHERE name LIKE '%oh%';
+```
 
--- Sort descending
-SELECT * FROM employees 
-ORDER BY salary DESC;
+---
 
--- Multiple columns
+**NULL Handling**
+```sql
+-- Find employees without department
+SELECT * FROM employees WHERE department_id IS NULL;
+
+-- Find employees with department
+SELECT * FROM employees WHERE department_id IS NOT NULL;
+```
+
+---
+
+### 📊 ORDER BY
+
+**Ascending (Default)**
+```sql
+SELECT * FROM employees ORDER BY salary;
+```
+
+**Descending**
+```sql
+SELECT * FROM employees ORDER BY salary DESC;
+```
+
+**Multiple Columns**
+```sql
 SELECT * FROM employees 
 ORDER BY department_id ASC, salary DESC;
+```
 
--- Order by calculated field
-SELECT name, salary * 12 AS annual_salary 
-FROM employees 
-ORDER BY annual_salary DESC;
-LIMIT and OFFSET
-sql
--- Limit results
-SELECT * FROM employees 
-LIMIT 10;
+---
 
--- Limit with offset (skip first 10, get next 10)
-SELECT * FROM employees 
-LIMIT 10 OFFSET 10;
+### 📄 LIMIT and OFFSET
 
--- Shorthand (offset, limit)
-SELECT * FROM employees 
-LIMIT 10, 10;
+**Limit Results**
+```sql
+-- Get first 10 employees
+SELECT * FROM employees LIMIT 10;
+```
 
--- Top paid employees
+**Pagination**
+```sql
+-- Skip first 10, get next 10 (page 2)
+SELECT * FROM employees LIMIT 10 OFFSET 10;
+
+-- Shorthand: (offset, limit)
+SELECT * FROM employees LIMIT 10, 10;
+```
+
+**Top N Results**
+```sql
+-- Top 5 highest paid employees
 SELECT * FROM employees 
 ORDER BY salary DESC 
 LIMIT 5;
-Filtering and Sorting
-Advanced Filtering
-sql
--- Combining conditions
+```
+
+---
+
+## 🎯 Filtering and Sorting
+
+### 🔍 Advanced Filtering
+
+**Combining Conditions**
+```sql
 SELECT * FROM employees 
 WHERE (department_id = 1 OR department_id = 2) 
 AND salary > 60000;
+```
 
+**NOT Operators**
+```sql
 -- NOT IN
 SELECT * FROM employees 
 WHERE department_id NOT IN (1, 2, 3);
@@ -478,119 +690,166 @@ WHERE department_id NOT IN (1, 2, 3);
 -- NOT BETWEEN
 SELECT * FROM employees 
 WHERE salary NOT BETWEEN 50000 AND 70000;
+```
 
--- Multiple LIKE conditions
+**Regular Expressions**
+```sql
+-- Starts with J or A
 SELECT * FROM employees 
-WHERE name LIKE 'J%' OR name LIKE 'A%';
+WHERE name REGEXP '^[JA]';
 
--- REGEXP (Regular Expression)
+-- Gmail addresses
 SELECT * FROM employees 
-WHERE name REGEXP '^[JA]';  -- Starts with J or A
+WHERE email REGEXP '@gmail\\.com$';
+```
 
-SELECT * FROM employees 
-WHERE email REGEXP '@gmail\\.com$';  -- Gmail addresses
-CASE Statement
-sql
--- Simple CASE
-SELECT name, salary,
+---
+
+### 🔀 CASE Statement
+
+**Simple CASE**
+```sql
+SELECT 
+    name, 
+    salary,
     CASE 
-        WHEN salary < 50000 THEN 'Low'
-        WHEN salary BETWEEN 50000 AND 70000 THEN 'Medium'
-        WHEN salary > 70000 THEN 'High'
-        ELSE 'Unknown'
+        WHEN salary < 50000 THEN '💰 Low'
+        WHEN salary BETWEEN 50000 AND 70000 THEN '💵 Medium'
+        WHEN salary > 70000 THEN '💎 High'
+        ELSE '❓ Unknown'
     END AS salary_grade
 FROM employees;
+```
 
--- CASE in ORDER BY
-SELECT * FROM employees
-ORDER BY 
-    CASE department_id
-        WHEN 1 THEN 1
-        WHEN 2 THEN 2
-        ELSE 3
-    END;
-Joins
-INNER JOIN
-sql
--- Basic INNER JOIN
+**📝 Example Output:**
+```
++------------+--------+--------------+
+| name       | salary | salary_grade |
++------------+--------+--------------+
+| John Doe   | 60000  | 💵 Medium    |
+| Jane Smith | 75000  | 💎 High      |
++------------+--------+--------------+
+```
+
+---
+
+## 🔗 Joins
+
+> **Joins** combine rows from multiple tables based on related columns.
+
+### 🎯 INNER JOIN
+
+**Returns only matching rows from both tables**
+
+```sql
 SELECT e.name, e.salary, d.name AS department
 FROM employees e
 INNER JOIN departments d ON e.department_id = d.id;
+```
 
--- Multiple INNER JOINs
-SELECT e.name, d.name AS department, p.name AS project
-FROM employees e
-INNER JOIN departments d ON e.department_id = d.id
-INNER JOIN projects p ON e.project_id = p.id;
+**Visual Representation:**
+```
+Employees    Departments
+   ↓              ↓
+[Match] ← INNER JOIN → [Match]
+```
 
--- Join with WHERE
-SELECT e.name, d.name AS department
-FROM employees e
-INNER JOIN departments d ON e.department_id = d.id
-WHERE e.salary > 60000;
-LEFT JOIN (LEFT OUTER JOIN)
-sql
--- Get all employees and their departments (including employees without departments)
+---
+
+### ⬅️ LEFT JOIN
+
+**Returns all rows from left table + matching rows from right table**
+
+```sql
 SELECT e.name, d.name AS department
 FROM employees e
 LEFT JOIN departments d ON e.department_id = d.id;
+```
 
--- Find employees without departments
+**Find Employees Without Departments:**
+```sql
 SELECT e.name
 FROM employees e
 LEFT JOIN departments d ON e.department_id = d.id
 WHERE d.id IS NULL;
-RIGHT JOIN (RIGHT OUTER JOIN)
-sql
--- Get all departments and their employees (including departments without employees)
-SELECT e.name, d.name AS department
-FROM employees e
-RIGHT JOIN departments d ON e.department_id = d.id;
+```
 
--- Find departments without employees
-SELECT d.name
-FROM employees e
-RIGHT JOIN departments d ON e.department_id = d.id
-WHERE e.id IS NULL;
-FULL OUTER JOIN
-sql
--- MySQL doesn't support FULL OUTER JOIN directly, use UNION
-SELECT e.name, d.name AS department
-FROM employees e
-LEFT JOIN departments d ON e.department_id = d.id
-UNION
+---
+
+### ➡️ RIGHT JOIN
+
+**Returns all rows from right table + matching rows from left table**
+
+```sql
 SELECT e.name, d.name AS department
 FROM employees e
 RIGHT JOIN departments d ON e.department_id = d.id;
-CROSS JOIN
-sql
--- Cartesian product (every combination)
+```
+
+---
+
+### 🔄 SELF JOIN
+
+**Join table to itself**
+
+```sql
+-- Find employees and their managers
+SELECT 
+    e.name AS employee, 
+    m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;
+```
+
+---
+
+### ✖️ CROSS JOIN
+
+**Cartesian product (every combination)**
+
+```sql
 SELECT e.name, d.name
 FROM employees e
 CROSS JOIN departments d;
-SELF JOIN
-sql
--- Find employees and their managers
-SELECT e.name AS employee, m.name AS manager
-FROM employees e
-LEFT JOIN employees m ON e.manager_id = m.id;
-Aggregate Functions
-Basic Aggregate Functions
-sql
--- COUNT
+```
+
+---
+
+## 📈 Aggregate Functions
+
+### 🧮 Basic Aggregates
+
+**COUNT**
+```sql
+-- Count all employees
 SELECT COUNT(*) FROM employees;
+
+-- Count distinct departments
 SELECT COUNT(DISTINCT department_id) FROM employees;
+```
 
--- SUM
-SELECT SUM(salary) FROM employees;
+**SUM**
+```sql
+-- Total salary expense
+SELECT SUM(salary) AS total_payroll FROM employees;
+```
 
--- AVG
-SELECT AVG(salary) FROM employees;
+**AVG (Average)**
+```sql
+-- Average salary
+SELECT AVG(salary) AS average_salary FROM employees;
+```
 
--- MIN and MAX
-SELECT MIN(salary), MAX(salary) FROM employees;
+**MIN and MAX**
+```sql
+SELECT 
+    MIN(salary) AS lowest_salary,
+    MAX(salary) AS highest_salary
+FROM employees;
+```
 
--- Multiple aggregates
+**Combined Example** ⭐
+```sql
 SELECT 
     COUNT(*) AS total_employees,
     AVG(salary) AS average_salary,
@@ -598,149 +857,238 @@ SELECT
     MAX(salary) AS max_salary,
     SUM(salary) AS total_payroll
 FROM employees;
-String Functions
-sql
--- CONCAT
-SELECT CONCAT(first_name, ' ', last_name) AS full_name 
+```
+
+**📝 Example Output:**
+```
++-----------------+-----------------+------------+------------+--------------+
+| total_employees | average_salary  | min_salary | max_salary | total_payroll|
++-----------------+-----------------+------------+------------+--------------+
+| 50              | 62500.00        | 45000      | 95000      | 3125000      |
++-----------------+-----------------+------------+------------+--------------+
+```
+
+---
+
+### 🔤 String Functions
+
+| Function | Description | Example |
+|----------|-------------|---------|
+| `CONCAT()` | Combine strings | `CONCAT('Hello', ' ', 'World')` |
+| `UPPER()` | Convert to uppercase | `UPPER('hello')` → 'HELLO' |
+| `LOWER()` | Convert to lowercase | `LOWER('HELLO')` → 'hello' |
+| `LENGTH()` | String length | `LENGTH('Hello')` → 5 |
+| `SUBSTRING()` | Extract substring | `SUBSTRING('Hello', 1, 3)` → 'Hel' |
+| `TRIM()` | Remove spaces | `TRIM('  Hello  ')` → 'Hello' |
+
+**📝 Example:**
+```sql
+SELECT 
+    CONCAT(first_name, ' ', last_name) AS full_name,
+    UPPER(email) AS email_upper,
+    LENGTH(name) AS name_length
 FROM employees;
+```
 
--- UPPER and LOWER
-SELECT UPPER(name), LOWER(email) FROM employees;
+---
 
--- LENGTH
-SELECT name, LENGTH(name) AS name_length FROM employees;
+### 🔢 Numeric Functions
 
--- SUBSTRING
-SELECT SUBSTRING(name, 1, 5) FROM employees;
+| Function | Description | Example |
+|----------|-------------|---------|
+| `ROUND()` | Round number | `ROUND(3.7)` → 4 |
+| `CEILING()` | Round up | `CEILING(3.2)` → 4 |
+| `FLOOR()` | Round down | `FLOOR(3.7)` → 3 |
+| `ABS()` | Absolute value | `ABS(-5)` → 5 |
+| `MOD()` | Modulo | `MOD(10, 3)` → 1 |
+| `POWER()` | Power | `POWER(2, 3)` → 8 |
 
--- TRIM, LTRIM, RTRIM
-SELECT TRIM(name) FROM employees;
-
--- REPLACE
-SELECT REPLACE(email, '@old.com', '@new.com') FROM employees;
-
--- LEFT and RIGHT
-SELECT LEFT(name, 3), RIGHT(name, 3) FROM employees;
-Numeric Functions
-sql
--- ROUND
-SELECT ROUND(salary, 2) FROM employees;
-
--- CEILING and FLOOR
-SELECT CEILING(salary/1000), FLOOR(salary/1000) FROM employees;
-
--- ABS
-SELECT ABS(-100);
-
--- MOD
-SELECT MOD(salary, 1000) FROM employees;
-
--- POWER
-SELECT POWER(2, 3);  -- 2^3 = 8
-
--- SQRT
-SELECT SQRT(16);  -- 4
-Date Functions
-sql
--- NOW and CURDATE
-SELECT NOW(), CURDATE(), CURTIME();
-
--- DATE_FORMAT
-SELECT DATE_FORMAT(hire_date, '%Y-%m-%d') FROM employees;
-SELECT DATE_FORMAT(NOW(), '%W, %M %d, %Y');
-
--- YEAR, MONTH, DAY
-SELECT YEAR(hire_date), MONTH(hire_date), DAY(hire_date) 
+**📝 Example:**
+```sql
+SELECT 
+    salary,
+    ROUND(salary * 1.10, 2) AS salary_after_raise,
+    MOD(salary, 1000) AS remainder
 FROM employees;
+```
 
--- DATEDIFF
-SELECT name, DATEDIFF(NOW(), hire_date) AS days_employed 
+---
+
+### 📅 Date Functions
+
+| Function | Description | Example |
+|----------|-------------|---------|
+| `NOW()` | Current datetime | 2024-01-15 14:30:00 |
+| `CURDATE()` | Current date | 2024-01-15 |
+| `CURTIME()` | Current time | 14:30:00 |
+| `YEAR()` | Extract year | `YEAR('2024-01-15')` → 2024 |
+| `MONTH()` | Extract month | `MONTH('2024-01-15')` → 1 |
+| `DAY()` | Extract day | `DAY('2024-01-15')` → 15 |
+| `DATEDIFF()` | Difference in days | `DATEDIFF('2024-01-15', '2024-01-01')` → 14 |
+
+**📝 Example:**
+```sql
+SELECT 
+    name,
+    hire_date,
+    DATEDIFF(NOW(), hire_date) AS days_employed,
+    TIMESTAMPDIFF(YEAR, hire_date, NOW()) AS years_employed
 FROM employees;
+```
 
--- DATE_ADD and DATE_SUB
-SELECT DATE_ADD(NOW(), INTERVAL 30 DAY);
-SELECT DATE_SUB(NOW(), INTERVAL 1 YEAR);
+---
 
--- TIMESTAMPDIFF
-SELECT name, TIMESTAMPDIFF(YEAR, hire_date, NOW()) AS years_employed 
-FROM employees;
-Grouping and Having
-GROUP BY
-sql
--- Group by single column
-SELECT department_id, COUNT(*) AS employee_count
+## 📦 Grouping and Having
+
+### 📊 GROUP BY
+
+**Single Column Grouping**
+```sql
+-- Count employees per department
+SELECT 
+    department_id, 
+    COUNT(*) AS employee_count
 FROM employees
 GROUP BY department_id;
+```
 
--- Group by multiple columns
-SELECT department_id, YEAR(hire_date), COUNT(*) AS count
+**📝 Example Output:**
+```
++---------------+----------------+
+| department_id | employee_count |
++---------------+----------------+
+| 1             | 15             |
+| 2             | 20             |
+| 3             | 10             |
++---------------+----------------+
+```
+
+**Multiple Column Grouping**
+```sql
+SELECT 
+    department_id, 
+    YEAR(hire_date) AS year,
+    COUNT(*) AS hires
 FROM employees
 GROUP BY department_id, YEAR(hire_date);
+```
 
--- Group with aggregate functions
-SELECT department_id, 
-       AVG(salary) AS avg_salary,
-       MIN(salary) AS min_salary,
-       MAX(salary) AS max_salary
+**With Aggregates** ⭐
+```sql
+SELECT 
+    department_id,
+    COUNT(*) AS total_employees,
+    AVG(salary) AS avg_salary,
+    MIN(salary) AS min_salary,
+    MAX(salary) AS max_salary
 FROM employees
 GROUP BY department_id;
-HAVING Clause
-sql
--- Filter groups (HAVING comes after GROUP BY)
-SELECT department_id, AVG(salary) AS avg_salary
+```
+
+---
+
+### 🎯 HAVING Clause
+
+> **WHERE** filters rows before grouping, **HAVING** filters groups after grouping.
+
+**Filter Groups**
+```sql
+-- Departments with average salary > 60000
+SELECT 
+    department_id, 
+    AVG(salary) AS avg_salary
 FROM employees
 GROUP BY department_id
 HAVING avg_salary > 60000;
+```
 
--- Multiple HAVING conditions
-SELECT department_id, COUNT(*) AS emp_count
+**Combined WHERE and HAVING**
+```sql
+SELECT 
+    department_id, 
+    AVG(salary) AS avg_salary
 FROM employees
+WHERE hire_date > '2023-01-01'  -- Filter BEFORE grouping
 GROUP BY department_id
-HAVING emp_count > 5 AND department_id IS NOT NULL;
+HAVING avg_salary > 60000;       -- Filter AFTER grouping
+```
 
--- HAVING with WHERE
-SELECT department_id, AVG(salary) AS avg_salary
-FROM employees
-WHERE hire_date > '2023-01-01'
-GROUP BY department_id
-HAVING avg_salary > 60000;
-WITH ROLLUP
-sql
--- Add summary row
-SELECT department_id, SUM(salary) AS total_salary
+---
+
+### 📈 WITH ROLLUP
+
+**Add Summary Row**
+```sql
+SELECT 
+    department_id, 
+    SUM(salary) AS total_salary
 FROM employees
 GROUP BY department_id WITH ROLLUP;
-Subqueries
-Subquery in WHERE
-sql
--- Find employees earning more than average
+```
+
+**📝 Example Output:**
+```
++---------------+--------------+
+| department_id | total_salary |
++---------------+--------------+
+| 1             | 500000       |
+| 2             | 800000       |
+| NULL          | 1300000      | ← Total
++---------------+--------------+
+```
+
+---
+
+## 🎭 Subqueries
+
+> A **subquery** is a query nested inside another query.
+
+### 🎯 Subquery in WHERE
+
+**Find Above-Average Earners**
+```sql
 SELECT name, salary
 FROM employees
 WHERE salary > (SELECT AVG(salary) FROM employees);
+```
 
--- Find employees in specific departments
+**IN Operator**
+```sql
+-- Find employees in Sales or Marketing
 SELECT name
 FROM employees
 WHERE department_id IN (
-    SELECT id FROM departments WHERE name IN ('Sales', 'Marketing')
+    SELECT id FROM departments 
+    WHERE name IN ('Sales', 'Marketing')
 );
+```
 
--- Find employees earning more than anyone in department 1
+**ALL Operator**
+```sql
+-- Earning more than ANYONE in department 1
 SELECT name, salary
 FROM employees
 WHERE salary > ALL (
     SELECT salary FROM employees WHERE department_id = 1
 );
+```
 
--- Find employees earning more than someone in department 1
+**ANY Operator**
+```sql
+-- Earning more than SOMEONE in department 1
 SELECT name, salary
 FROM employees
 WHERE salary > ANY (
     SELECT salary FROM employees WHERE department_id = 1
 );
-Subquery in FROM
-sql
--- Use subquery as temporary table
+```
+
+---
+
+### 📊 Subquery in FROM
+
+**Temporary Table**
+```sql
 SELECT dept_salary.department_id, dept_salary.avg_salary
 FROM (
     SELECT department_id, AVG(salary) AS avg_salary
@@ -748,346 +1096,328 @@ FROM (
     GROUP BY department_id
 ) AS dept_salary
 WHERE dept_salary.avg_salary > 60000;
-Subquery in SELECT
-sql
--- Scalar subquery
-SELECT name, salary,
-    (SELECT AVG(salary) FROM employees) AS company_avg,
-    salary - (SELECT AVG(salary) FROM employees) AS diff_from_avg
-FROM employees;
-Correlated Subquery
-sql
--- Subquery references outer query
-SELECT e1.name, e1.salary
-FROM employees e1
-WHERE e1.salary > (
-    SELECT AVG(e2.salary)
-    FROM employees e2
-    WHERE e2.department_id = e1.department_id
-);
-EXISTS
-sql
--- Check if subquery returns rows
+```
+
+---
+
+### 🔍 EXISTS
+
+**Check if Subquery Returns Rows**
+```sql
+-- Departments with employees
 SELECT d.name
 FROM departments d
 WHERE EXISTS (
-    SELECT 1 FROM employees e WHERE e.department_id = d.id
+    SELECT 1 FROM employees e 
+    WHERE e.department_id = d.id
 );
+```
 
--- NOT EXISTS
+**NOT EXISTS**
+```sql
+-- Departments without employees
 SELECT d.name
 FROM departments d
 WHERE NOT EXISTS (
-    SELECT 1 FROM employees e WHERE e.department_id = d.id
+    SELECT 1 FROM employees e 
+    WHERE e.department_id = d.id
 );
-Constraints
-Primary Key
-sql
--- Add primary key during creation
+```
+
+---
+
+## 🔒 Constraints
+
+> **Constraints** enforce rules on data in tables.
+
+### 🔑 Primary Key
+
+**Uniquely identifies each row**
+
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100)
 );
+```
 
--- Add primary key after creation
-ALTER TABLE employees 
-ADD PRIMARY KEY (id);
-
--- Composite primary key
+**Composite Primary Key**
+```sql
 CREATE TABLE order_items (
     order_id INT,
     product_id INT,
     quantity INT,
     PRIMARY KEY (order_id, product_id)
 );
-Foreign Key
-sql
--- Add foreign key during creation
+```
+
+---
+
+### 🔗 Foreign Key
+
+**Links tables together**
+
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY,
     department_id INT,
     FOREIGN KEY (department_id) REFERENCES departments(id)
 );
+```
 
--- Add foreign key with options
+**With Cascade Options**
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY,
     department_id INT,
     FOREIGN KEY (department_id) 
         REFERENCES departments(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON DELETE CASCADE      -- Delete employees if department deleted
+        ON UPDATE CASCADE      -- Update if department ID changes
 );
+```
 
--- ON DELETE options:
--- CASCADE: Delete child rows
--- SET NULL: Set foreign key to NULL
--- RESTRICT: Prevent deletion
--- NO ACTION: Same as RESTRICT
+| Option | Description |
+|--------|-------------|
+| `CASCADE` | Delete/update child rows |
+| `SET NULL` | Set foreign key to NULL |
+| `RESTRICT` | Prevent deletion/update |
+| `NO ACTION` | Same as RESTRICT |
 
--- Add foreign key after creation
-ALTER TABLE employees
-ADD CONSTRAINT fk_department
-FOREIGN KEY (department_id) REFERENCES departments(id);
-Unique Constraint
-sql
--- Single column unique
+---
+
+### ✨ UNIQUE Constraint
+
+**Ensures all values are different**
+
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY,
-    email VARCHAR(100) UNIQUE
+    email VARCHAR(100) UNIQUE  -- No duplicate emails
 );
+```
 
--- Multiple column unique
-CREATE TABLE employees (
-    id INT PRIMARY KEY,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
-    UNIQUE (first_name, last_name)
-);
+---
 
--- Add unique after creation
-ALTER TABLE employees 
-ADD UNIQUE (email);
-NOT NULL Constraint
-sql
+### ❗ NOT NULL Constraint
+
+**Field must have a value**
+
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL
 );
+```
 
--- Add NOT NULL after creation
-ALTER TABLE employees 
-MODIFY name VARCHAR(100) NOT NULL;
-CHECK Constraint (MySQL 8.0.16+)
-sql
--- Add check during creation
+---
+
+### ✅ CHECK Constraint
+
+**Custom validation rules** (MySQL 8.0.16+)
+
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY,
     age INT CHECK (age >= 18),
     salary DECIMAL(10,2) CHECK (salary > 0)
 );
+```
 
--- Named check constraint
-CREATE TABLE employees (
-    id INT PRIMARY KEY,
-    age INT,
-    CONSTRAINT chk_age CHECK (age >= 18 AND age <= 65)
-);
+---
 
--- Add check after creation
-ALTER TABLE employees 
-ADD CONSTRAINT chk_salary CHECK (salary > 0);
-DEFAULT Constraint
-sql
+### 🎨 DEFAULT Constraint
+
+**Provides default value**
+
+```sql
 CREATE TABLE employees (
     id INT PRIMARY KEY,
     status VARCHAR(20) DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    salary DECIMAL(10,2) DEFAULT 50000
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
--- Add default after creation
-ALTER TABLE employees 
-ALTER COLUMN status SET DEFAULT 'active';
-Indexes
-Create Index
-sql
--- Single column index
+---
+
+## ⚡ Indexes
+
+> **Indexes** speed up data retrieval but slow down writes.
+
+### ➕ Create Index
+
+**Single Column**
+```sql
 CREATE INDEX idx_name ON employees(name);
+```
 
--- Multiple column index (composite)
+**Composite Index**
+```sql
 CREATE INDEX idx_name_dept ON employees(name, department_id);
+```
 
--- Unique index
+**Unique Index**
+```sql
 CREATE UNIQUE INDEX idx_email ON employees(email);
+```
 
--- Full-text index
+**Full-Text Index**
+```sql
 CREATE FULLTEXT INDEX idx_description ON products(description);
+```
 
--- Index with length limit
-CREATE INDEX idx_name ON employees(name(10));
-Show Indexes
-sql
--- Show all indexes on table
+---
+
+### 👀 Show Indexes
+
+```sql
 SHOW INDEXES FROM employees;
+```
 
--- or
-SHOW KEYS FROM employees;
-Drop Index
-sql
--- Drop index
+---
+
+### ❌ Drop Index
+
+```sql
 DROP INDEX idx_name ON employees;
+```
 
--- or
-ALTER TABLE employees DROP INDEX idx_name;
-Using Indexes Efficiently
-sql
--- Check query execution plan
+---
+
+### 🔍 Check Query Performance
+
+**EXPLAIN** shows how MySQL executes a query
+
+```sql
 EXPLAIN SELECT * FROM employees WHERE name = 'John';
+```
 
--- Force index usage
-SELECT * FROM employees 
-FORCE INDEX (idx_name) 
-WHERE name = 'John';
+---
 
--- Ignore index
-SELECT * FROM employees 
-IGNORE INDEX (idx_name) 
-WHERE name = 'John';
-Views
-Create View
-sql
--- Simple view
+## 👁️ Views
+
+> A **view** is a saved query that acts like a virtual table.
+
+### ➕ Create View
+
+**Simple View**
+```sql
 CREATE VIEW employee_details AS
 SELECT e.name, e.salary, d.name AS department
 FROM employees e
 JOIN departments d ON e.department_id = d.id;
+```
 
--- View with WHERE clause
-CREATE VIEW high_earners AS
-SELECT name, salary, department_id
-FROM employees
-WHERE salary > 70000;
-
--- View with aggregation
-CREATE VIEW department_stats AS
-SELECT 
-    d.name AS department,
-    COUNT(e.id) AS employee_count,
-    AVG(e.salary) AS avg_salary
-FROM departments d
-LEFT JOIN employees e ON d.id = e.department_id
-GROUP BY d.id;
-Use View
-sql
--- Query view like a table
+**Use View**
+```sql
+-- Query like a regular table
 SELECT * FROM employee_details;
+```
 
-SELECT * FROM high_earners WHERE department_id = 1;
-Modify View
-sql
--- Replace view
+---
+
+### 🔧 Modify View
+
+```sql
 CREATE OR REPLACE VIEW employee_details AS
 SELECT e.name, e.salary, e.email, d.name AS department
 FROM employees e
 JOIN departments d ON e.department_id = d.id;
+```
 
--- Alter view
-ALTER VIEW employee_details AS
-SELECT e.name, e.salary, d.name AS department
-FROM employees e
-JOIN departments d ON e.department_id = d.id;
-Drop View
-sql
+---
+
+### ❌ Drop View
+
+```sql
 DROP VIEW employee_details;
+```
 
-DROP VIEW IF EXISTS employee_details;
-Show Views
-sql
--- Show all views
-SHOW FULL TABLES WHERE TABLE_TYPE = 'VIEW';
+---
 
--- Show view definition
-SHOW CREATE VIEW employee_details;
-Stored Procedures
-Create Procedure
-sql
--- Simple procedure
+## ⚙️ Stored Procedures
+
+> **Stored procedures** are reusable SQL code blocks.
+
+### ➕ Create Procedure
+
+**Simple Procedure**
+```sql
 DELIMITER //
 CREATE PROCEDURE GetAllEmployees()
 BEGIN
     SELECT * FROM employees;
 END //
 DELIMITER ;
+```
 
--- Procedure with parameters
+**With Parameters**
+```sql
 DELIMITER //
 CREATE PROCEDURE GetEmployeeById(IN emp_id INT)
 BEGIN
     SELECT * FROM employees WHERE id = emp_id;
 END //
 DELIMITER ;
+```
 
--- Procedure with OUT parameter
+**With OUT Parameter**
+```sql
 DELIMITER //
 CREATE PROCEDURE GetEmployeeCount(OUT total INT)
 BEGIN
     SELECT COUNT(*) INTO total FROM employees;
 END //
 DELIMITER ;
+```
 
--- Procedure with INOUT parameter
-DELIMITER //
-CREATE PROCEDURE IncreaseSalary(INOUT salary DECIMAL(10,2), IN percentage INT)
-BEGIN
-    SET salary = salary + (salary * percentage / 100);
-END //
-DELIMITER ;
+---
 
--- Complex procedure with logic
-DELIMITER //
-CREATE PROCEDURE UpdateSalaryByPerformance(
-    IN emp_id INT,
-    IN performance_rating INT
-)
-BEGIN
-    DECLARE current_salary DECIMAL(10,2);
-    DECLARE increase_percentage INT;
-    
-    SELECT salary INTO current_salary 
-    FROM employees 
-    WHERE id = emp_id;
-    
-    IF performance_rating >= 9 THEN
-        SET increase_percentage = 20;
-    ELSEIF performance_rating >= 7 THEN
-        SET increase_percentage = 10;
-    ELSEIF performance_rating >= 5 THEN
-        SET increase_percentage = 5;
-    ELSE
-        SET increase_percentage = 0;
-    END IF;
-    
-    UPDATE employees 
-    SET salary = current_salary + (current_salary * increase_percentage / 100)
-    WHERE id = emp_id;
-    
-    SELECT increase_percentage AS applied_increase;
-END //
-DELIMITER ;
-Call Procedure
-sql
--- Call simple procedure
+### ▶️ Call Procedure
+
+```sql
+-- Simple call
 CALL GetAllEmployees();
 
--- Call with IN parameter
+-- With parameter
 CALL GetEmployeeById(1);
 
--- Call with OUT parameter
+-- With OUT parameter
 CALL GetEmployeeCount(@total);
 SELECT @total;
+```
 
--- Call with INOUT parameter
-SET @salary = 50000;
-CALL IncreaseSalary(@salary, 10);
-SELECT @salary;
-Show Procedures
-sql
--- Show all procedures
+---
+
+### 👀 Show Procedures
+
+```sql
+-- List all procedures
 SHOW PROCEDURE STATUS WHERE Db = 'company';
 
--- Show procedure definition
+-- Show procedure code
 SHOW CREATE PROCEDURE GetAllEmployees;
-Drop Procedure
-sql
-DROP PROCEDURE GetAllEmployees;
+```
 
-DROP PROCEDURE IF EXISTS GetAllEmployees;
-Triggers
-Create Trigger
-sql
--- BEFORE INSERT trigger
+---
+
+### ❌ Drop Procedure
+
+```sql
+DROP PROCEDURE GetAllEmployees;
+```
+
+---
+
+## 🎬 Triggers
+
+> **Triggers** automatically execute code when certain events occur.
+
+### ➕ Create Trigger
+
+**BEFORE INSERT**
+```sql
 DELIMITER //
 CREATE TRIGGER before_employee_insert
 BEFORE INSERT ON employees
@@ -1097,8 +1427,10 @@ BEGIN
     SET NEW.email = LOWER(NEW.email);
 END //
 DELIMITER ;
+```
 
--- AFTER INSERT trigger
+**AFTER INSERT** (Audit Log)
+```sql
 DELIMITER //
 CREATE TRIGGER after_employee_insert
 AFTER INSERT ON employees
@@ -1108,8 +1440,10 @@ BEGIN
     VALUES (NEW.id, 'INSERT', NOW());
 END //
 DELIMITER ;
+```
 
--- BEFORE UPDATE trigger
+**BEFORE UPDATE** (Validation)
+```sql
 DELIMITER //
 CREATE TRIGGER before_employee_update
 BEFORE UPDATE ON employees
@@ -1123,64 +1457,70 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+```
 
--- AFTER UPDATE trigger
+**AFTER UPDATE** (History Tracking)
+```sql
 DELIMITER //
 CREATE TRIGGER after_employee_update
 AFTER UPDATE ON employees
 FOR EACH ROW
 BEGIN
     IF OLD.salary <> NEW.salary THEN
-        INSERT INTO salary_history (employee_id, old_salary, new_salary, change_date)
+        INSERT INTO salary_history 
+        (employee_id, old_salary, new_salary, change_date)
         VALUES (NEW.id, OLD.salary, NEW.salary, NOW());
     END IF;
 END //
 DELIMITER ;
+```
 
--- BEFORE DELETE trigger
-DELIMITER //
-CREATE TRIGGER before_employee_delete
-BEFORE DELETE ON employees
-FOR EACH ROW
-BEGIN
-    INSERT INTO deleted_employees 
-    SELECT * FROM employees WHERE id = OLD.id;
-END //
-DELIMITER ;
-Show Triggers
-sql
--- Show all triggers
+---
+
+### 👀 Show Triggers
+
+```sql
 SHOW TRIGGERS;
 
--- Show triggers for specific table
+-- For specific table
 SHOW TRIGGERS WHERE `Table` = 'employees';
+```
 
--- Show trigger definition
-SHOW CREATE TRIGGER before_employee_insert;
-Drop Trigger
-sql
+---
+
+### ❌ Drop Trigger
+
+```sql
 DROP TRIGGER before_employee_insert;
+```
 
-DROP TRIGGER IF EXISTS before_employee_insert;
-Transactions
-Basic Transaction
-sql
--- Start transaction
+---
+
+## 💰 Transactions
+
+> **Transactions** ensure data integrity by grouping operations.
+
+### 🔄 Basic Transaction
+
+```sql
 START TRANSACTION;
--- or
-BEGIN;
 
--- Execute queries
+-- Transfer money between accounts
 UPDATE accounts SET balance = balance - 100 WHERE id = 1;
 UPDATE accounts SET balance = balance + 100 WHERE id = 2;
 
--- Commit (save changes)
+-- Save changes
 COMMIT;
 
--- Or rollback (undo changes)
-ROLLBACK;
-Transaction with Savepoint
-sql
+-- OR undo changes
+-- ROLLBACK;
+```
+
+---
+
+### 📌 Savepoints
+
+```sql
 START TRANSACTION;
 
 UPDATE accounts SET balance = balance - 100 WHERE id = 1;
@@ -1189,52 +1529,57 @@ SAVEPOINT sp1;
 
 UPDATE accounts SET balance = balance + 100 WHERE id = 2;
 
-SAVEPOINT sp2;
-
-UPDATE accounts SET balance = balance - 50 WHERE id = 3;
-
 -- Rollback to savepoint
-ROLLBACK TO sp2;
+ROLLBACK TO sp1;
 
 COMMIT;
-Transaction Isolation Levels
-sql
--- Show current isolation level
-SELECT @@transaction_ISOLATION;
+```
 
--- Set isolation level
-SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
+---
+
+### 🔒 Isolation Levels
+
+| Level | Description | Issues Prevented |
+|-------|-------------|------------------|
+| `READ UNCOMMITTED` | Can read uncommitted data | None |
+| `READ COMMITTED` | Only read committed data | Dirty reads |
+| `REPEATABLE READ` | Same read in transaction | Dirty + Non-repeatable reads |
+| `SERIALIZABLE` | Full isolation | All concurrency issues |
+
+**Set Isolation Level**
+```sql
 SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
-SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+```
 
--- Example with specific isolation level
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-START TRANSACTION;
-SELECT * FROM accounts WHERE id = 1;
-UPDATE accounts SET balance = balance - 100 WHERE id = 1;
-COMMIT;
-Auto-commit
-sql
--- Check auto-commit status
+---
+
+### ⚙️ Auto-commit
+
+```sql
+-- Check status
 SELECT @@autocommit;
 
--- Disable auto-commit
+-- Disable (manual commits)
 SET autocommit = 0;
 
--- Enable auto-commit
+-- Enable (auto commits)
 SET autocommit = 1;
-Transaction Best Practices
-sql
--- Complete transaction example
+```
+
+---
+
+### ✅ Transaction Best Practices
+
+```sql
 START TRANSACTION;
 
--- Check if sufficient balance
+-- Lock row for update
 SELECT balance INTO @current_balance 
 FROM accounts 
 WHERE id = 1 
-FOR UPDATE;  -- Lock the row
+FOR UPDATE;
 
+-- Check condition
 IF @current_balance >= 100 THEN
     UPDATE accounts SET balance = balance - 100 WHERE id = 1;
     UPDATE accounts SET balance = balance + 100 WHERE id = 2;
@@ -1243,165 +1588,214 @@ ELSE
     ROLLBACK;
     SELECT 'Insufficient balance' AS error;
 END IF;
-User Management
-Create User
-sql
--- Create user
-CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+```
 
--- Create user for any host
-CREATE USER 'username'@'%' IDENTIFIED BY 'password';
+---
 
--- Create user with specific host
-CREATE USER 'username'@'192.168.1.100' IDENTIFIED BY 'password';
+## 👥 User Management
 
--- Create user if not exists
-CREATE USER IF NOT EXISTS 'username'@'localhost' IDENTIFIED BY 'password';
-Grant Privileges
-sql
--- Grant all privileges on all databases
-GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost';
+### ➕ Create User
 
--- Grant all privileges on specific database
-GRANT ALL PRIVILEGES ON company.* TO 'username'@'localhost';
+```sql
+-- Local user
+CREATE USER 'john'@'localhost' IDENTIFIED BY 'secure_password';
 
--- Grant specific privileges
-GRANT SELECT, INSERT, UPDATE ON company.* TO 'username'@'localhost';
+-- Remote user (any host)
+CREATE USER 'john'@'%' IDENTIFIED BY 'secure_password';
 
--- Grant privileges on specific table
-GRANT SELECT, INSERT ON company.employees TO 'username'@'localhost';
+-- Specific IP
+CREATE USER 'john'@'192.168.1.100' IDENTIFIED BY 'secure_password';
+```
 
--- Grant with grant option (user can grant to others)
-GRANT SELECT ON company.* TO 'username'@'localhost' WITH GRANT OPTION;
+---
 
--- Common privileges:
--- SELECT, INSERT, UPDATE, DELETE
--- CREATE, DROP, ALTER, INDEX
--- CREATE VIEW, SHOW VIEW
--- CREATE ROUTINE, ALTER ROUTINE, EXECUTE
--- ALL PRIVILEGES
+### 🔑 Grant Privileges
 
--- Apply changes
+**All Privileges**
+```sql
+-- On all databases
+GRANT ALL PRIVILEGES ON *.* TO 'john'@'localhost';
+
+-- On specific database
+GRANT ALL PRIVILEGES ON company.* TO 'john'@'localhost';
+```
+
+**Specific Privileges**
+```sql
+GRANT SELECT, INSERT, UPDATE ON company.* TO 'john'@'localhost';
+
+-- On specific table
+GRANT SELECT, INSERT ON company.employees TO 'john'@'localhost';
+```
+
+**Common Privileges:**
+- 📖 `SELECT` - Read data
+- ✏️ `INSERT` - Add new data
+- 🔄 `UPDATE` - Modify data
+- ❌ `DELETE` - Remove data
+- 🏗️ `CREATE` - Create databases/tables
+- 🗑️ `DROP` - Delete databases/tables
+- 🔧 `ALTER` - Modify structure
+- 👀 `SHOW VIEW` - View definitions
+- ⚙️ `EXECUTE` - Run procedures
+
+**Apply Changes**
+```sql
 FLUSH PRIVILEGES;
-Show Privileges
-sql
--- Show current user's privileges
+```
+
+---
+
+### 👀 Show Privileges
+
+```sql
+-- Current user
 SHOW GRANTS;
 
--- Show specific user's privileges
-SHOW GRANTS FOR 'username'@'localhost';
-Revoke Privileges
-sql
+-- Specific user
+SHOW GRANTS FOR 'john'@'localhost';
+```
+
+---
+
+### 🔒 Revoke Privileges
+
+```sql
 -- Revoke specific privileges
-REVOKE INSERT, UPDATE ON company.* FROM 'username'@'localhost';
+REVOKE INSERT, UPDATE ON company.* FROM 'john'@'localhost';
 
--- Revoke all privileges
-REVOKE ALL PRIVILEGES ON company.* FROM 'username'@'localhost';
-Modify User
-sql
+-- Revoke all
+REVOKE ALL PRIVILEGES ON company.* FROM 'john'@'localhost';
+```
+
+---
+
+### 🔧 Modify User
+
+```sql
 -- Change password
-ALTER USER 'username'@'localhost' IDENTIFIED BY 'new_password';
-
--- Change authentication plugin
-ALTER USER 'username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+ALTER USER 'john'@'localhost' IDENTIFIED BY 'new_password';
 
 -- Rename user
-RENAME USER 'old_username'@'localhost' TO 'new_username'@'localhost';
-Delete User
-sql
--- Drop user
-DROP USER 'username'@'localhost';
+RENAME USER 'john'@'localhost' TO 'john_smith'@'localhost';
+```
 
--- Drop if exists
-DROP USER IF EXISTS 'username'@'localhost';
-Show Users
-sql
--- List all users
+---
+
+### ❌ Delete User
+
+```sql
+DROP USER 'john'@'localhost';
+```
+
+---
+
+### 👥 List Users
+
+```sql
 SELECT user, host FROM mysql.user;
-Advanced Concepts
-Window Functions (MySQL 8.0+)
-sql
--- ROW_NUMBER
+```
+
+---
+
+## 🚀 Advanced Concepts
+
+### 📊 Window Functions (MySQL 8.0+)
+
+**ROW_NUMBER** - Sequential numbering
+```sql
 SELECT 
     name, 
     salary,
     ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
 FROM employees;
+```
 
--- RANK (with gaps for ties)
+**RANK** - Ranking with gaps
+```sql
 SELECT 
     name, 
     salary,
     RANK() OVER (ORDER BY salary DESC) AS rank
 FROM employees;
+```
 
--- DENSE_RANK (no gaps for ties)
+**📝 Example Output:**
+```
++------------+--------+------+
+| name       | salary | rank |
++------------+--------+------+
+| Alice      | 90000  | 1    |
+| Bob        | 80000  | 2    |
+| Charlie    | 80000  | 2    | ← Same rank
+| David      | 70000  | 4    | ← Gap in ranking
++------------+--------+------+
+```
+
+**DENSE_RANK** - Ranking without gaps
+```sql
 SELECT 
     name, 
     salary,
     DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank
 FROM employees;
+```
 
--- PARTITION BY
+**PARTITION BY** - Ranking within groups
+```sql
 SELECT 
     name,
     department_id,
     salary,
     RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dept_rank
 FROM employees;
+```
 
--- LAG (previous row)
+**LAG and LEAD** - Previous/Next row
+```sql
 SELECT 
     name,
     salary,
-    LAG(salary) OVER (ORDER BY hire_date) AS previous_salary
-FROM employees;
-
--- LEAD (next row)
-SELECT 
-    name,
-    salary,
+    LAG(salary) OVER (ORDER BY hire_date) AS previous_salary,
     LEAD(salary) OVER (ORDER BY hire_date) AS next_salary
 FROM employees;
+```
 
--- FIRST_VALUE and LAST_VALUE
-SELECT 
-    name,
-    salary,
-    FIRST_VALUE(salary) OVER (ORDER BY salary DESC) AS highest_salary,
-    LAST_VALUE(salary) OVER (ORDER BY salary DESC 
-        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS lowest_salary
-FROM employees;
-
--- NTILE (divide into N groups)
-SELECT 
-    name,
-    salary,
-    NTILE(4) OVER (ORDER BY salary) AS quartile
-FROM employees;
-
--- Running total
+**Running Total**
+```sql
 SELECT 
     name,
     salary,
     SUM(salary) OVER (ORDER BY hire_date) AS running_total
 FROM employees;
+```
 
--- Moving average
+**Moving Average**
+```sql
 SELECT 
     name,
     salary,
-    AVG(salary) OVER (ORDER BY hire_date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS moving_avg
+    AVG(salary) OVER (
+        ORDER BY hire_date 
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) AS moving_avg_3
 FROM employees;
-Common Table Expressions (CTE)
-sql
--- Simple CTE
+```
+
+---
+
+### 🎯 Common Table Expressions (CTE)
+
+**Simple CTE**
+```sql
 WITH high_earners AS (
     SELECT * FROM employees WHERE salary > 70000
 )
 SELECT * FROM high_earners WHERE department_id = 1;
+```
 
--- Multiple CTEs
+**Multiple CTEs**
+```sql
 WITH 
 high_earners AS (
     SELECT * FROM employees WHERE salary > 70000
@@ -1414,125 +1808,140 @@ dept_summary AS (
 SELECT h.name, h.salary, d.avg_salary
 FROM high_earners h
 JOIN dept_summary d ON h.department_id = d.department_id;
+```
 
--- Recursive CTE (organizational hierarchy)
+**Recursive CTE** - Organizational Hierarchy
+```sql
 WITH RECURSIVE employee_hierarchy AS (
-    -- Base case: top-level employees
+    -- Base: Top-level employees
     SELECT id, name, manager_id, 1 AS level
     FROM employees
     WHERE manager_id IS NULL
     
     UNION ALL
     
-    -- Recursive case: employees with managers
+    -- Recursive: Add subordinates
     SELECT e.id, e.name, e.manager_id, eh.level + 1
     FROM employees e
     JOIN employee_hierarchy eh ON e.manager_id = eh.id
 )
 SELECT * FROM employee_hierarchy ORDER BY level, name;
+```
 
--- Recursive CTE (number series)
-WITH RECURSIVE numbers AS (
-    SELECT 1 AS n
-    UNION ALL
-    SELECT n + 1 FROM numbers WHERE n < 10
-)
-SELECT * FROM numbers;
-JSON Functions (MySQL 5.7+)
-sql
--- Create table with JSON
+---
+
+### 📦 JSON Functions (MySQL 5.7+)
+
+**Create Table with JSON**
+```sql
 CREATE TABLE products (
     id INT PRIMARY KEY,
     name VARCHAR(100),
     attributes JSON
 );
+```
 
--- Insert JSON data
+**Insert JSON Data**
+```sql
 INSERT INTO products (id, name, attributes) VALUES
 (1, 'Laptop', '{"brand": "Dell", "ram": 16, "storage": 512}'),
-(2, 'Phone', '{"brand": "Apple", "model": "iPhone 14", "color": "black"}');
+(2, 'Phone', '{"brand": "Apple", "model": "iPhone 14"}');
+```
 
--- Extract JSON values
+**Extract JSON Values**
+```sql
 SELECT 
     name,
     JSON_EXTRACT(attributes, '$.brand') AS brand,
-    attributes->'$.ram' AS ram,  -- Shorthand
-    attributes->>'$.brand' AS brand_unquoted  -- Unquoted
+    attributes->'$.ram' AS ram,           -- Shorthand
+    attributes->>'$.brand' AS brand_text  -- Unquoted string
 FROM products;
+```
 
--- Query JSON array
+**Query JSON Arrays**
+```sql
+-- Product with lenses array
 INSERT INTO products VALUES
 (3, 'Camera', '{"brand": "Canon", "lenses": ["50mm", "85mm", "24-70mm"]}');
 
+-- Query array
 SELECT 
     name,
     JSON_LENGTH(attributes->'$.lenses') AS lens_count,
     JSON_EXTRACT(attributes, '$.lenses[0]') AS first_lens
 FROM products
 WHERE JSON_CONTAINS(attributes->'$.lenses', '"50mm"');
+```
 
--- Modify JSON
+**Modify JSON**
+```sql
+-- Update existing field
 UPDATE products
 SET attributes = JSON_SET(attributes, '$.ram', 32)
 WHERE id = 1;
 
+-- Add new field
 UPDATE products
 SET attributes = JSON_INSERT(attributes, '$.warranty', '2 years')
 WHERE id = 1;
 
+-- Remove field
 UPDATE products
 SET attributes = JSON_REMOVE(attributes, '$.color')
 WHERE id = 2;
+```
 
--- JSON aggregate functions
-SELECT JSON_ARRAYAGG(name) AS all_products FROM products;
+---
 
-SELECT JSON_OBJECTAGG(id, name) AS product_map FROM products;
-Full-Text Search
-sql
--- Create table with FULLTEXT index
+### 🔍 Full-Text Search
+
+**Create Full-Text Index**
+```sql
 CREATE TABLE articles (
     id INT PRIMARY KEY,
     title VARCHAR(200),
     content TEXT,
     FULLTEXT (title, content)
 );
+```
 
--- Add FULLTEXT index to existing table
-ALTER TABLE articles ADD FULLTEXT(title, content);
-
--- Natural language search
+**Natural Language Search**
+```sql
 SELECT * FROM articles
 WHERE MATCH(title, content) AGAINST('database optimization');
+```
 
--- Boolean search
+**Boolean Search**
+```sql
 SELECT * FROM articles
 WHERE MATCH(title, content) 
 AGAINST('+mysql -oracle' IN BOOLEAN MODE);
+```
 
--- Boolean operators:
--- + : must include
--- - : must not include
--- > : increase relevance
--- < : decrease relevance
--- * : wildcard
--- "" : exact phrase
+**Boolean Operators:**
+- `+` Must include
+- `-` Must exclude
+- `*` Wildcard
+- `""` Exact phrase
+- `>` Increase relevance
+- `<` Decrease relevance
 
--- Query expansion
-SELECT * FROM articles
-WHERE MATCH(title, content) 
-AGAINST('database' WITH QUERY EXPANSION);
-
--- Get relevance score
+**With Relevance Score**
+```sql
 SELECT 
     title,
     MATCH(title, content) AGAINST('mysql optimization') AS relevance
 FROM articles
 WHERE MATCH(title, content) AGAINST('mysql optimization')
 ORDER BY relevance DESC;
-Partitioning
-sql
--- Range partitioning
+```
+
+---
+
+### 📊 Partitioning
+
+**Range Partitioning** - By date range
+```sql
 CREATE TABLE sales (
     id INT,
     sale_date DATE,
@@ -1544,8 +1953,10 @@ PARTITION BY RANGE (YEAR(sale_date)) (
     PARTITION p2024 VALUES LESS THAN (2025),
     PARTITION p_future VALUES LESS THAN MAXVALUE
 );
+```
 
--- List partitioning
+**List Partitioning** - By specific values
+```sql
 CREATE TABLE employees (
     id INT,
     name VARCHAR(100),
@@ -1556,8 +1967,10 @@ PARTITION BY LIST COLUMNS(department) (
     PARTITION p_tech VALUES IN ('IT', 'Development'),
     PARTITION p_other VALUES IN ('HR', 'Finance')
 );
+```
 
--- Hash partitioning
+**Hash Partitioning** - Even distribution
+```sql
 CREATE TABLE logs (
     id INT,
     message TEXT,
@@ -1565,273 +1978,335 @@ CREATE TABLE logs (
 )
 PARTITION BY HASH(id)
 PARTITIONS 4;
+```
 
--- Key partitioning
-CREATE TABLE users (
-    id INT PRIMARY KEY,
-    username VARCHAR(50)
-)
-PARTITION BY KEY()
-PARTITIONS 4;
+---
 
--- Show partitions
-SELECT * FROM INFORMATION_SCHEMA.PARTITIONS 
-WHERE TABLE_NAME = 'sales';
+### ⚡ Performance Optimization
 
--- Add partition
-ALTER TABLE sales 
-ADD PARTITION (PARTITION p2025 VALUES LESS THAN (2026));
-
--- Drop partition
-ALTER TABLE sales DROP PARTITION p2022;
-Performance Optimization
-sql
--- EXPLAIN - Analyze query execution
+**EXPLAIN - Query Analysis**
+```sql
 EXPLAIN SELECT * FROM employees WHERE salary > 60000;
+```
 
-EXPLAIN FORMAT=JSON SELECT * FROM employees WHERE salary > 60000;
+**📝 Example Output:**
+```
++----+-------------+-----------+------+---------------+------+---------+------+------+-------------+
+| id | select_type | table     | type | possible_keys | key  | key_len | ref  | rows | Extra       |
++----+-------------+-----------+------+---------------+------+---------+------+------+-------------+
+| 1  | SIMPLE      | employees | ALL  | NULL          | NULL | NULL    | NULL | 100  | Using where |
++----+-------------+-----------+------+---------------+------+---------+------+------+-------------+
+```
 
--- ANALYZE TABLE - Update table statistics
+**ANALYZE TABLE** - Update statistics
+```sql
 ANALYZE TABLE employees;
+```
 
--- OPTIMIZE TABLE - Defragment table
+**OPTIMIZE TABLE** - Defragment
+```sql
 OPTIMIZE TABLE employees;
+```
 
--- SHOW PROFILE - Detailed query profiling
-SET profiling = 1;
-SELECT * FROM employees WHERE salary > 60000;
-SHOW PROFILES;
-SHOW PROFILE FOR QUERY 1;
-
--- Query Cache (deprecated in MySQL 8.0)
--- Use result cache or application-level caching instead
-
--- Index hints
+**Index Hints**
+```sql
+-- Suggest index
 SELECT * FROM employees USE INDEX (idx_salary) WHERE salary > 60000;
+
+-- Force index
 SELECT * FROM employees FORCE INDEX (idx_salary) WHERE salary > 60000;
+
+-- Ignore index
 SELECT * FROM employees IGNORE INDEX (idx_salary) WHERE salary > 60000;
-Import and Export
-sql
--- Export to CSV
+```
+
+---
+
+### 📥 Import and Export
+
+**Export to CSV**
+```sql
 SELECT * FROM employees
 INTO OUTFILE '/tmp/employees.csv'
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n';
+```
 
--- Import from CSV
+**Import from CSV**
+```sql
 LOAD DATA INFILE '/tmp/employees.csv'
 INTO TABLE employees
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;  -- Skip header row
+IGNORE 1 ROWS;  -- Skip header
+```
 
--- mysqldump (command line)
--- Export database
--- mysqldump -u root -p company > company_backup.sql
+**mysqldump (Command Line)**
+```bash
+# Export database
+mysqldump -u root -p company > company_backup.sql
 
--- Export specific tables
--- mysqldump -u root -p company employees departments > backup.sql
+# Export specific tables
+mysqldump -u root -p company employees departments > backup.sql
 
--- Export only structure
--- mysqldump -u root -p --no-data company > structure.sql
-
--- Export only data
--- mysqldump -u root -p --no-create-info company > data.sql
-
--- Import dump
--- mysql -u root -p company < company_backup.sql
-Backup and Restore
-bash
-# Full database backup
-mysqldump -u root -p --all-databases > all_databases.sql
-
-# Single database backup
-mysqldump -u root -p company > company.sql
-
-# Backup with compression
+# Export with compression
 mysqldump -u root -p company | gzip > company.sql.gz
 
-# Restore from backup
-mysql -u root -p company < company.sql
+# Import
+mysql -u root -p company < company_backup.sql
 
-# Restore compressed backup
+# Import compressed
 gunzip < company.sql.gz | mysql -u root -p company
+```
 
-# Backup specific tables
-mysqldump -u root -p company employees departments > tables.sql
-System Information
-sql
--- Show server status
-SHOW STATUS;
+---
 
--- Show specific status
-SHOW STATUS LIKE 'Threads_connected';
+### 💾 Backup and Restore
 
--- Show variables
-SHOW VARIABLES;
+```bash
+# Full backup
+mysqldump -u root -p --all-databases > all_databases.sql
 
--- Show specific variable
-SHOW VARIABLES LIKE 'max_connections';
+# Single database
+mysqldump -u root -p company > company.sql
 
--- Show processlist (active queries)
-SHOW PROCESSLIST;
+# Structure only
+mysqldump -u root -p --no-data company > structure.sql
 
--- Show full processlist
-SHOW FULL PROCESSLIST;
+# Data only
+mysqldump -u root -p --no-create-info company > data.sql
 
--- Kill process
-KILL PROCESS_ID;
+# Restore
+mysql -u root -p company < company.sql
+```
 
--- Database size
+---
+
+### 📊 System Information
+
+**Database Size**
+```sql
 SELECT 
-    table_schema AS 'Database',
-    ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS 'Size (MB)'
+    table_schema AS '📂 Database',
+    ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS '📊 Size (MB)'
 FROM information_schema.tables
 GROUP BY table_schema;
+```
 
--- Table size
+**Table Size**
+```sql
 SELECT 
-    table_name AS 'Table',
-    ROUND(((data_length + index_length) / 1024 / 1024), 2) AS 'Size (MB)'
+    table_name AS '📋 Table',
+    ROUND(((data_length + index_length) / 1024 / 1024), 2) AS '💾 Size (MB)'
 FROM information_schema.tables
 WHERE table_schema = 'company'
 ORDER BY (data_length + index_length) DESC;
+```
 
--- Show table engine
-SELECT 
-    table_name,
-    engine
-FROM information_schema.tables
-WHERE table_schema = 'company';
-Regular Expression Functions
-sql
--- REGEXP / RLIKE
-SELECT * FROM employees WHERE name REGEXP '^J';  -- Starts with J
-SELECT * FROM employees WHERE name REGEXP 'son;  -- Ends with son
-SELECT * FROM employees WHERE email REGEXP '@gmail\\.com;
+**Active Connections**
+```sql
+SHOW PROCESSLIST;
+```
 
--- REGEXP_LIKE (MySQL 8.0+)
-SELECT * FROM employees WHERE REGEXP_LIKE(name, '^[AJ]');
+**Server Status**
+```sql
+SHOW STATUS LIKE 'Threads_connected';
+SHOW VARIABLES LIKE 'max_connections';
+```
 
--- REGEXP_REPLACE (MySQL 8.0+)
-SELECT REGEXP_REPLACE(phone, '[^0-9]', '') AS clean_phone FROM employees;
+---
 
--- REGEXP_SUBSTR (MySQL 8.0+)
-SELECT REGEXP_SUBSTR(email, '[^@]+') AS username FROM employees;
+## 📌 Quick Reference
 
--- REGEXP_INSTR (MySQL 8.0+)
-SELECT REGEXP_INSTR(email, '@') AS at_position FROM employees;
-Best Practices Checklist
-sql
--- ✓ Always use prepared statements to prevent SQL injection
-PREPARE stmt FROM 'SELECT * FROM employees WHERE id = ?';
-SET @id = 1;
-EXECUTE stmt USING @id;
-DEALLOCATE PREPARE stmt;
+### 🎯 Most Common Commands
 
--- ✓ Use transactions for related operations
-START TRANSACTION;
-UPDATE accounts SET balance = balance - 100 WHERE id = 1;
-UPDATE accounts SET balance = balance + 100 WHERE id = 2;
-COMMIT;
+| Category | Command | Example |
+|----------|---------|---------|
+| **Database** | Create | `CREATE DATABASE company;` |
+| | Use | `USE company;` |
+| | Drop | `DROP DATABASE company;` |
+| | Show | `SHOW DATABASES;` |
+| **Table** | Create | `CREATE TABLE employees (...);` |
+| | Drop | `DROP TABLE employees;` |
+| | Describe | `DESCRIBE employees;` |
+| | Show | `SHOW TABLES;` |
+| **CRUD** | Insert | `INSERT INTO ... VALUES (...);` |
+| | Select | `SELECT * FROM employees;` |
+| | Update | `UPDATE ... SET ... WHERE ...;` |
+| | Delete | `DELETE FROM ... WHERE ...;` |
 
--- ✓ Index frequently queried columns
-CREATE INDEX idx_email ON employees(email);
+---
 
--- ✓ Use LIMIT for large result sets
-SELECT * FROM employees ORDER BY id LIMIT 100;
+### ✅ Best Practices
 
--- ✓ Avoid SELECT * in production
-SELECT id, name, email FROM employees;  -- Better
+| ✅ Do | ❌ Don't |
+|-------|----------|
+| Use prepared statements | Trust user input directly |
+| Use transactions for related operations | Forget COMMIT/ROLLBACK |
+| Index frequently queried columns | Over-index (slows writes) |
+| Use specific column names | Use `SELECT *` in production |
+| Use `LIMIT` for large results | Load millions of rows at once |
+| Regular backups | Assume data is safe |
+| Use `WHERE` in UPDATE/DELETE | Update/delete without `WHERE` |
+| Normalize database design | Duplicate data everywhere |
+| Use appropriate data types | Use VARCHAR for everything |
+| Test queries with EXPLAIN | Run slow queries blindly |
 
--- ✓ Use JOIN instead of subqueries when possible
--- Good
-SELECT e.name, d.name 
-FROM employees e 
-JOIN departments d ON e.department_id = d.id;
+---
 
--- ✓ Use EXPLAIN to optimize queries
-EXPLAIN SELECT * FROM employees WHERE salary > 60000;
+### 🔍 SQL Query Order
 
--- ✓ Regular maintenance
-ANALYZE TABLE employees;
-OPTIMIZE TABLE employees;
+```sql
+SELECT columns          -- 5. Select columns
+FROM table             -- 1. Get data from table
+WHERE condition        -- 2. Filter rows
+GROUP BY columns       -- 3. Group rows
+HAVING condition       -- 4. Filter groups
+ORDER BY columns       -- 6. Sort results
+LIMIT number;          -- 7. Limit results
+```
 
--- ✓ Use appropriate data types
--- Use INT instead of VARCHAR for IDs
--- Use DECIMAL for currency
--- Use appropriate VARCHAR length
+---
 
--- ✓ Normalize database design
--- Follow 1NF, 2NF, 3NF rules
--- Avoid data redundancy
+### 🎨 Data Type Quick Guide
 
--- ✓ Use foreign keys for referential integrity
-ALTER TABLE employees
-ADD FOREIGN KEY (department_id) REFERENCES departments(id);
+| Type | Use For | Example |
+|------|---------|---------|
+| `INT` | Whole numbers | Age, quantity, ID |
+| `DECIMAL(10,2)` | Money | Prices, salaries |
+| `VARCHAR(255)` | Text | Names, emails |
+| `TEXT` | Long text | Descriptions, articles |
+| `DATE` | Dates | Birth date, hire date |
+| `DATETIME` | Date + time | Created at, updated at |
+| `BOOLEAN` | True/false | Is active, is verified |
+| `JSON` | JSON data | Metadata, settings |
 
--- ✓ Regular backups
--- Schedule daily/weekly backups
--- Test restore procedures
+---
 
--- ✓ Monitor slow queries
--- Enable slow query log
-SET GLOBAL slow_query_log = 'ON';
-SET GLOBAL long_query_time = 2;
-Quick Reference Cheat Sheet
-Most Common Commands
-sql
--- Database
-SHOW DATABASES;
-CREATE DATABASE db_name;
-USE db_name;
-DROP DATABASE db_name;
+## 🎓 Learning Resources
 
--- Tables
-SHOW TABLES;
-DESCRIBE table_name;
-CREATE TABLE table_name (...);
-DROP TABLE table_name;
+### 📚 Official Documentation
+- [MySQL Official Docs](https://dev.mysql.com/doc/) - Complete reference
+- [MySQL Tutorial](https://dev.mysql.com/doc/mysql-tutorial-excerpt/8.0/en/) - Official tutorial
 
--- CRUD
-INSERT INTO table_name VALUES (...);
-SELECT * FROM table_name;
-UPDATE table_name SET column = value WHERE condition;
-DELETE FROM table_name WHERE condition;
+### 🎯 Practice Platforms
+- [SQLZoo](https://sqlzoo.net/) - Interactive SQL tutorial
+- [LeetCode SQL](https://leetcode.com/problemset/database/) - SQL practice problems
+- [HackerRank SQL](https://www.hackerrank.com/domains/sql) - Coding challenges
+- [Mode SQL Tutorial](https://mode.com/sql-tutorial/) - Real-world examples
 
--- Filtering
-WHERE column = value
-WHERE column IN (value1, value2)
-WHERE column BETWEEN value1 AND value2
-WHERE column LIKE 'pattern%'
-WHERE column IS NULL
+### 📖 Learning Paths
+1. **Week 1-2:** Basic commands (CREATE, INSERT, SELECT, UPDATE, DELETE)
+2. **Week 3-4:** Filtering, sorting, joins
+3. **Week 5-6:** Aggregates, grouping, subqueries
+4. **Week 7-8:** Indexes, views, stored procedures
+5. **Week 9-10:** Transactions, triggers, advanced concepts
 
--- Sorting
-ORDER BY column ASC|DESC
+### 💡 Pro Tips
+- 🎯 Practice daily with real datasets
+- 📝 Start simple, build complexity gradually
+- 🔍 Use EXPLAIN to understand query performance
+- 💾 Always backup before major operations
+- 📚 Read error messages carefully
+- 🤝 Join SQL communities (Reddit, Stack Overflow)
 
--- Limiting
-LIMIT 10
-LIMIT 10 OFFSET 20
+---
 
--- Aggregates
-COUNT(*), SUM(column), AVG(column), MIN(column), MAX(column)
+## 🎯 Sample Database Schema
 
--- Grouping
-GROUP BY column
-HAVING condition
+```sql
+-- Create sample company database
+CREATE DATABASE company;
+USE company;
 
--- Joins
-INNER JOIN table ON condition
-LEFT JOIN table ON condition
-RIGHT JOIN table ON condition
-Additional Resources
-Official MySQL Documentation: https://dev.mysql.com/doc/
-MySQL Tutorial: https://www.mysqltutorial.org/
-Practice: https://sqlzoo.net/
-SQL Style Guide: https://www.sqlstyle.guide/
-Happy Learning! 🚀
+-- Departments table
+CREATE TABLE departments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    budget DECIMAL(12, 2)
+);
 
-Remember: The best way to learn SQL is by practicing. Create databases, write queries, and experiment with different commands. Start with simple queries and gradually move to complex ones.
+-- Employees table
+CREATE TABLE employees (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(20),
+    hire_date DATE NOT NULL,
+    salary DECIMAL(10, 2) DEFAULT 50000,
+    department_id INT,
+    manager_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL,
+    FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
+);
 
+-- Sample data
+INSERT INTO departments (name, budget) VALUES
+('Sales', 500000),
+('Engineering', 1000000),
+('Marketing', 300000),
+('HR', 200000);
+
+INSERT INTO employees (first_name, last_name, email, hire_date, salary, department_id) VALUES
+('John', 'Doe', 'john.doe@company.com', '2020-01-15', 75000, 2),
+('Jane', 'Smith', 'jane.smith@company.com', '2019-06-20', 85000, 2),
+('Bob', 'Johnson', 'bob.j@company.com', '2021-03-10', 65000, 1),
+('Alice', 'Williams', 'alice.w@company.com', '2020-09-05', 70000, 3),
+('Charlie', 'Brown', 'charlie.b@company.com', '2022-01-12', 60000, 4);
+```
+
+---
+
+## 🎉 Conclusion
+
+Congratulations! 🎊 You now have a comprehensive reference for MySQL and SQL. Remember:
+
+- 📖 **Learning SQL is a journey** - Start with basics, practice regularly
+- 💻 **Hands-on practice is key** - Create databases, experiment with queries
+- 🔍 **Read error messages** - They're your friends in debugging
+- 💾 **Always backup** - Before making major changes
+- 🚀 **Keep learning** - SQL is powerful and constantly evolving
+
+---
+
+### 🌟 Next Steps
+
+1. ✅ Install MySQL on your system
+2. ✅ Create the sample database above
+3. ✅ Practice each section with your own examples
+4. ✅ Build a small project (todo app, blog, etc.)
+5. ✅ Learn about database design principles
+6. ✅ Explore MySQL optimization techniques
+7. ✅ Join SQL communities and forums
+
+---
+
+### 📞 Need Help?
+
+- 💬 [Stack Overflow SQL Tag](https://stackoverflow.com/questions/tagged/sql)
+- 💬 [MySQL Community Forums](https://forums.mysql.com/)
+- 📧 [r/SQL on Reddit](https://www.reddit.com/r/SQL/)
+- 📖 [MySQL Documentation](https://dev.mysql.com/doc/)
+
+---
+
+<div align="center">
+
+### 🚀 Happy Learning! 
+
+**Made with ❤️ for SQL Learners**
+
+⭐ If this guide helped you, share it with others!
+
+</div>
+
+---
+
+**Last Updated:** November 2025  
+**Version:** 2.0  
+**License:** Educational Use

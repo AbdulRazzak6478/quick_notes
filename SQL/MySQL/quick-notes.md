@@ -89,6 +89,16 @@ SHOW DATABASES;
 ```sql
 DROP DATABASE appdb;
 ```
+### Get help
+```sql
+HELP;
+```
+### Exit MySQL
+```sql
+EXIT;
+-- or
+QUIT;
+```
 
 ---
 

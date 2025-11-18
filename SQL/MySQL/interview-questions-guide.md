@@ -425,7 +425,6 @@ Joining a table to itself using aliases.
 `type`: join type (ALL, index, range, ref, eq_ref), `key`: index used, `rows`: estimated rows scanned.
 
 52. **What is cardinality?**
-
 Measure of uniqueness of values in a column — high cardinality is good for indexes.
 
 53. **What is a covering index?**
