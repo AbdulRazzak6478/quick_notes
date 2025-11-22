@@ -347,7 +347,7 @@ git add filename.txt
 # Add multiple files
 git add file1.txt file2.txt file3.txt
 
-# Add all files in directory
+# Add all files in directory testing
 git add .
 
 # Add all modified files (not untracked)
