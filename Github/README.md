@@ -292,3 +292,9 @@ Mixed Mode
     git --no -paper log
     git revert HEAD~1
 ```
+
+### To Check Logs
+
+```
+git log --all --decorate --oneline --graph
+```

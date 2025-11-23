@@ -616,7 +616,7 @@ git restore --staged .
 
 ---
 
-### ⏪ Undo Commits
+### ⏪ Undoing Commits
 
 **⚠️ Use with Caution! These change history.**
 
