@@ -100,7 +100,7 @@ WHERE
 -- no grouping
 -- filter table based
 -- before
--- no neccessary
+-- no necessary
 
 HAVING
 -- count
